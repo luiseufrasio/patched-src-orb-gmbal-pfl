@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2019 Payara Foundation and/or its affiliates.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -41,6 +42,24 @@ public abstract class BridgeBase {
                         }
                     }
             );
+
+    private static final java.lang.reflect.Method defineClassMethod = AccessController.doPrivileged(
+            new PrivilegedAction<java.lang.reflect.Method>() {
+        public java.lang.reflect.Method run() {
+            try {
+                java.lang.reflect.Method meth = ClassLoader.class.getDeclaredMethod(
+                        "defineClass", String.class,
+                        byte[].class, int.class, int.class,
+                        ProtectionDomain.class);
+                meth.setAccessible(true);
+                return meth;
+            } catch (Exception exc) {
+                throw new RuntimeException(
+                        "Could not find defineClass method!", exc);
+            }
+        }
+    }
+    );
 
     /**
      * Fetches a field element within the given
@@ -234,7 +253,12 @@ public abstract class BridgeBase {
      * @param protectionDomain the domain in which the class should be defined
      */
     public final Class<?> defineClass(String className, byte[] classBytes, ClassLoader classLoader, ProtectionDomain protectionDomain) {
-        return unsafe.defineClass(className, classBytes, 0, classBytes.length, classLoader, null);
+        try {
+            return (Class) defineClassMethod.invoke(classLoader, className, 
+                    classBytes, 0, classBytes.length, protectionDomain);
+        } catch (Exception exc) {
+            throw new RuntimeException("Could not invoke defineClass method ", exc);
+        }
     }
 
     /**

@@ -1009,7 +1009,7 @@ public class CheckMethodAdapter extends MethodAdapter {
                 checkIdentifier(name, begin, slash, null);
                 begin = slash + 1;
             } while (slash != max);
-        } catch (IllegalArgumentException _) {
+        } catch (IllegalArgumentException ex) {
             throw new IllegalArgumentException("Invalid "
                     + msg
                     + " (must be a fully qualified class name in internal form): "
@@ -1083,7 +1083,7 @@ public class CheckMethodAdapter extends MethodAdapter {
                 }
                 try {
                     checkInternalName(desc, start + 1, index, null);
-                } catch (IllegalArgumentException _) {
+                } catch (IllegalArgumentException ex) {
                     throw new IllegalArgumentException("Invalid descriptor: "
                             + desc);
                 }
