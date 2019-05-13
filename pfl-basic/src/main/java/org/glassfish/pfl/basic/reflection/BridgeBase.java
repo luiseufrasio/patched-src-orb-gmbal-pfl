@@ -256,7 +256,7 @@ public abstract class BridgeBase {
      */
     @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
-    public final Class<?> defineClass(String className, byte[] classBytes, ClassLoader classLoader, ProtectionDomain protectionDomain) {
+    public Class<?> defineClass(String className, byte[] classBytes, ClassLoader classLoader, ProtectionDomain protectionDomain) {
         try {
             return (Class) defineClassMethod.invoke(classLoader, className, 
                     classBytes, 0, classBytes.length, protectionDomain);
