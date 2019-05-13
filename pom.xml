@@ -22,7 +22,7 @@
 
     <groupId>org.glassfish.pfl</groupId>
     <artifactId>pfl</artifactId>
-    <version>4.0.3-SNAPSHOT</version>
+    <version>4.0.2.payara-p1</version>
     <packaging>pom</packaging>
     
     <name>Eclipse ORB</name>
@@ -113,11 +113,6 @@
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>3.0.0-M2</version>
                 </plugin>               
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
